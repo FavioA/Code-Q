@@ -144,7 +144,4 @@ submitButton.addEventListener('click', submitScore);
 clearScoresButton.addEventListener('click', clearHighScores); // Added line
 startButton.addEventListener('click', startQuiz);
 
-// Display high scores when the page loads
-displayHighScores();
-
 
