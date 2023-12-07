@@ -3,10 +3,13 @@ const quizScreen = document.getElementById('quiz-screen');
 const endScreen = document.getElementById('end-screen');
 const questionElement = document.getElementById('question');
 const optionsContainer = document.getElementById('options');
+const timerElement = document.getElementById('timer');
 const submitButton = document.getElementById('submit-score');
+const clearScoresButton = document.getElementById('clear-scores');
 const initialsInput = document.getElementById('initials');
 const finalScoreElement = document.getElementById('final-score');
-const highScoresList = document.getElementById('high-scores');
+const highScoresList = document.getElementById('final-score');
+const backButton = document.getElementById('back-btn'); // Added line
 
 let currentQuestionIndex = 0;
 let timeLeft = 60;
@@ -43,9 +46,14 @@ const questions = [
 
 const highScores = JSON.parse(localStorage.getItem('highScores')) || [];
 
+function showStartButton() {
+  startButton.style.display = 'block';
+}
+
 function startQuiz() {
   startButton.style.display = 'none';
   quizScreen.style.display = 'block';
+  updateTimerDisplay();
   timer = setInterval(updateTimer, 1000);
   showQuestion();
 }
@@ -87,6 +95,7 @@ function endQuiz() {
   quizScreen.style.display = 'none';
   endScreen.style.display = 'block';
   finalScoreElement.textContent = timeLeft;
+  showStartButton(); // Show the "Start Quiz" button
 }
 
 function updateTimer() {
@@ -95,10 +104,54 @@ function updateTimer() {
   if (timeLeft <= 0) {
     endQuiz();
   }
+
+  updateTimerDisplay();
 }
 
-submitButton.addEventListener('click', () => {
-  // Handle submitting the score, e.g., saving to localStorage
-});
+function updateTimerDisplay() {
+  timerElement.textContent = `Time: ${timeLeft}s`;
+}
 
+function submitScore() {
+  const initials = initialsInput.value.trim();
+
+  if (initials !== '') {
+    const score = {
+      initials: initials,
+      score: timeLeft
+    };
+
+    highScores.push(score);
+    highScores.sort((a, b) => b.score - a.score);
+    highScores.splice(5); // Keep only the top 5 scores
+
+    localStorage.setItem('highScores', JSON.stringify(highScores));
+    displayHighScores();
+    showStartButton(); // Show the "Start Quiz" button
+  }
+}
+
+function displayHighScores() {
+  highScoresList.innerHTML = '';
+
+  highScores.forEach((score, index) => {
+    const listItem = document.createElement('li');
+    listItem.textContent = `${index + 1}. ${score.initials} - ${score.score}`;
+    highScoresList.appendChild(listItem);
+  });
+}
+
+function clearHighScores() {
+  highScores.length = 0;
+  localStorage.removeItem('highScores');
+  displayHighScores();
+  showStartButton(); // Show the "Start Quiz" button
+}
+
+submitButton.addEventListener('click', submitScore);
+clearScoresButton.addEventListener('click', clearHighScores);
 startButton.addEventListener('click', startQuiz);
+backButton.addEventListener('click', showStartButton); // Added line
+
+// Display high scores when the page loads
+displayHighScores();

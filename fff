@@ -1,0 +1,28 @@
+const questions = [
+  {
+    question: "What does HTML stand for?",
+    options: ["Hyper Text Markup Language", "Hyper Transfer Markup Language", "Home Tool Markup Language", "Hyperlink and Text Markup Language"],
+    correctAnswer: 0
+  },
+  {
+    question: "Which of the following is NOT a programming language?",
+    options: ["JavaScript", "Python", "CSS", "HTML"],
+    correctAnswer: 2
+  },
+  {
+    question: "What is the purpose of the 'console.log()' function in JavaScript?",
+    options: ["Display a message on the web page", "Print messages to the browser console", "Create a log file on the server", "None of the above"],
+    correctAnswer: 1
+  },
+  {
+    question: "How do you declare a variable in JavaScript?",
+    options: ["let myVar;", "variable myVar;", "v myVar;", "var myVar;"],
+    correctAnswer: 3
+  },
+  {
+    question: "What is the result of the expression '5 + '5' in JavaScript?",
+    options: ["10", "55", "Error", "undefined"],
+    correctAnswer: 1
+  },
+  // Add more questions here
+];
