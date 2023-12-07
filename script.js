@@ -5,11 +5,10 @@ const questionElement = document.getElementById('question');
 const optionsContainer = document.getElementById('options');
 const timerElement = document.getElementById('timer');
 const submitButton = document.getElementById('submit-score');
-const clearScoresButton = document.getElementById('clear-scores');
+const clearScoresButton = document.getElementById('clear-scores'); // Added line
 const initialsInput = document.getElementById('initials');
 const finalScoreElement = document.getElementById('final-score');
-const highScoresList = document.getElementById('final-score');
-const backButton = document.getElementById('back-btn'); // Added line
+const highScoresList = document.getElementById('final-score'); // Updated line
 
 let currentQuestionIndex = 0;
 let timeLeft = 60;
@@ -45,10 +44,6 @@ const questions = [
 ];
 
 const highScores = JSON.parse(localStorage.getItem('highScores')) || [];
-
-function showStartButton() {
-  startButton.style.display = 'block';
-}
 
 function startQuiz() {
   startButton.style.display = 'none';
@@ -95,7 +90,6 @@ function endQuiz() {
   quizScreen.style.display = 'none';
   endScreen.style.display = 'block';
   finalScoreElement.textContent = timeLeft;
-  showStartButton(); // Show the "Start Quiz" button
 }
 
 function updateTimer() {
@@ -127,7 +121,6 @@ function submitScore() {
 
     localStorage.setItem('highScores', JSON.stringify(highScores));
     displayHighScores();
-    showStartButton(); // Show the "Start Quiz" button
   }
 }
 
@@ -142,16 +135,16 @@ function displayHighScores() {
 }
 
 function clearHighScores() {
-  highScores.length = 0;
-  localStorage.removeItem('highScores');
-  displayHighScores();
-  showStartButton(); // Show the "Start Quiz" button
+  highScores.length = 0; // Clear the highScores array
+  localStorage.removeItem('highScores'); // Remove highScores from local storage
+  displayHighScores(); // Refresh the high scores display
 }
 
 submitButton.addEventListener('click', submitScore);
-clearScoresButton.addEventListener('click', clearHighScores);
+clearScoresButton.addEventListener('click', clearHighScores); // Added line
 startButton.addEventListener('click', startQuiz);
-backButton.addEventListener('click', showStartButton); // Added line
 
 // Display high scores when the page loads
 displayHighScores();
+
+
